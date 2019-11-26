@@ -3,12 +3,15 @@ package ua.com.foxminded.racing.data;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.time.LocalTime;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
+
 
 import static java.util.stream.Collectors.toMap;
 
@@ -63,19 +66,38 @@ public class DataHandler {
         }
     }
     
-    void getLapTimes(Map<String, Racer> racers, String endDataPath) {
-        try (Stream<String> endData = Files.lines(Paths.get(endDataPath))) {
-            endData.forEach(line -> {
-                String abbreviation = line.substring(0, 3);
-                String endTime = line.substring(14, 26);
-                LocalTime endTimeParsed = LocalTime.parse(endTime);
-                racers.get(abbreviation).setEndTime(endTimeParsed);
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    void calculateLapTimes(Map<String, Racer> racers) {
+        
+        racers.values().forEach(racer -> {
+            Duration lapTime = Duration.between(racer.getStartTime(), racer.getEndTime());
+            racer.setLapTime(lapTime);
+        });
     }
 
+    String formatDuration(Duration duration) {
+        long minutes = duration.toMinutes();
+        long seconds = duration.toSeconds() % 60;
+        long millis = duration.toMillis() % 1000;
+        String output = String.format("%1$02d" + ":" + "%2$02d" + "." + "%3$03d", minutes, seconds, millis);
+        return output;
+    }
+    
+    Map<String, Racer> rankRacers(Map<String, Racer> racers) {
+        /*
+         * racers = racers.entrySet() .stream() .sorted(Map.Entry.comparingByValue())
+         * .collect(toMap( Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue)
+         * -> oldValue, LinkedHashMap::new));
+         */
+        
+        Map<String, Racer> rankedRacers = new LinkedHashMap<>();
+        racers.entrySet()
+        .stream()
+        .sorted(Map.Entry.comparingByValue())
+        .forEach(x -> rankedRacers.put(x.getKey(), x.getValue()));
+        return rankedRacers;
+    }
+ 
+    
     /*
      * List<Racer> setStartTimes(List<Racer> racers, String startDataPath) { try
      * (Stream<String> startData = Files.lines(Paths.get(startDataPath))) {
