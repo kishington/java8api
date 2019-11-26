@@ -6,16 +6,26 @@ import java.time.LocalTime;
 public class Racer implements Comparable<Racer> {
     String name;
     String abbreviation;
+    String team;
     Duration lapTime;
     LocalTime startTime;
     LocalTime endTime;
     int position;
+    
     
     @Override
     public int compareTo(Racer racer) {
         long racerLapTimeInMillis = racer.lapTime.toMillis();
         long thisRacerLapTimeInMillis = this.lapTime.toMillis();
         return (int) (thisRacerLapTimeInMillis - racerLapTimeInMillis);
+    }
+    
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
     }
     
     public int getPosition() {

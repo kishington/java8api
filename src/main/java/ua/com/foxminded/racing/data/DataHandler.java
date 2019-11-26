@@ -5,9 +5,13 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -27,11 +31,13 @@ public class DataHandler {
         try (Stream<String> abbreviationsData = Files.lines(Paths.get(abbreviationsDataPath))) {
             racers = abbreviationsData.collect(toMap(line -> line.substring(0, 3), line -> {
                 Racer racer = new Racer();
-                Pattern pattern = Pattern.compile("_(.*)_");
+                Pattern pattern = Pattern.compile("_(.*)_(.*)");
                 Matcher matcher = pattern.matcher(line);
                 matcher.find();
                 String name = matcher.group(1);
+                String team = matcher.group(2);
                 racer.setName(name);
+                racer.setTeam(team);
                 return racer;
             }));
         } catch (IOException e) {
@@ -97,17 +103,27 @@ public class DataHandler {
         return rankedRacers;
     }
  
+    int getLongestNameLength(Map<String, Racer> racers) {
+        List<String> names = new ArrayList<>();
+        racers.values().forEach(racer -> names.add(racer.getName()));
+ 
+        String longestName = "";
+        Optional<String> longestNameOp = names.stream().max(Comparator.comparingInt(String::length)); 
+        if (longestNameOp.isPresent()) {
+            longestName = longestNameOp.get();
+        }
+        return longestName.length();
+    }
     
-    /*
-     * List<Racer> setStartTimes(List<Racer> racers, String startDataPath) { try
-     * (Stream<String> startData = Files.lines(Paths.get(startDataPath))) {
-     * 
-     * List<Racer> tempRacers = startData.map(line -> { Racer racer = new Racer();
-     * racer.setStartTime(line.substring(14, 26)); return racer;
-     * }).collect(toList()); tempRacers.stream().
-     * 
-     * } catch (IOException e) { e.printStackTrace(); }
-     * 
-     * return racers; }
-     */
+    int getLongestTeamNameLength(Map<String, Racer> racers) {
+        List<String> teams = new ArrayList<>();
+        racers.values().forEach(racer -> teams.add(racer.getTeam()));
+ 
+        String longestTeamName = "";
+        Optional<String> longestTeamNameOp = teams.stream().max(Comparator.comparingInt(String::length)); 
+        if (longestTeamNameOp.isPresent()) {
+            longestTeamName = longestTeamNameOp.get();
+        }
+        return longestTeamName.length();
+    }
 }
