@@ -9,8 +9,8 @@ public class Visualiser {
     private static final int NUMBER_OF_QUALIFYING_RACERS = 15;
 
     public String visualiseRaceResults() {
-        DataHandler dataHandler = new DataHandler();
-        List<Racer> racers = dataHandler.prepareDataForVisualisation();
+        DataPreparer dataPreparer = new DataPreparer();
+        List<Racer> racers = dataPreparer.prepareData();
 
         int longestNameLength = getLongestNameLength(racers);
         int longestTeamNameLength = getLongestTeamNameLength(racers);

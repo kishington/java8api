@@ -22,7 +22,7 @@ public class DataPreparer {
     private static final String START_DATA_PATH = "\\workspace\\javaapiexercise\\src\\main\\resources\\start.log";
     private static final String END_DATA_PATH = "\\workspace\\javaapiexercise\\src\\main\\resources\\end.log";
     
-    List<Racer> prepareDataForVisualisation() {
+    List<Racer> prepareData() {
         Map<String, Racer> racersMap = getRacers(ABBREVIATIONS_DATA_PATH);
         setStartTimes(racersMap, START_DATA_PATH);
         setEndTimes(racersMap, END_DATA_PATH);
