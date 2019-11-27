@@ -1,51 +1,36 @@
 package ua.com.foxminded.racing.data;
 
-import java.util.List;
-import java.util.Map;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
 public class VisualiserTest {
     
-    Visualiser visualiser = new Visualiser();
-    
-    String startDataPath = "\\workspace\\javaapiexercise\\src\\main\\resources\\start.log";
-    String endDataPath = "\\workspace\\javaapiexercise\\src\\main\\resources\\end.log";
-    String abbreviationsDataPath = "\\workspace\\javaapiexercise\\src\\main\\resources\\abbreviations.txt";
-
     @Test
-    void testFormatRaceResults() {
-        DataHandler dataHandler = new DataHandler();
-        Map<String, Racer> racers = dataHandler.getRacers(abbreviationsDataPath);
-        dataHandler.setStartTimes(racers, startDataPath);
-        dataHandler.setEndTimes(racers, endDataPath);
-        List<Racer> racersList = dataHandler.calculateLapTimes(racers);
-        dataHandler.rankRacers(racersList);
-        String results = visualiser.visualiseRaceResults();
-        System.out.println(results);
-    }
-    
-    
-    /*
-     * @Test void test_longestNames() { DataHandler dataHandler = new DataHandler();
-     * Map<String, Racer> tRacers = dataHandler.getRacers(abbreviationsDataPath);
-     * int nameLength = dataHandler.getLongestNameLength(tRacers); int
-     * teamNameLength = dataHandler.getLongestTeamNameLength(tRacers);
-     * System.out.println("name: " + nameLength + "\n" + "team: " + teamNameLength);
-     * }
-     */
-    
-    @Test
-    void test() {
-        String formattedLapTime = "01:32.234";
-        String name = "Daniel Ricciardo";
-        String team = "RED BULL RACING TAG HEUER";
-        int longestNameLength = 17;
-        int longestTeamNameLength = 20;
-        int i = 1;
-        String line = String.format("%1$2s. " + "%2$-" + longestNameLength + "s| " + 
-        "%3$-" + longestTeamNameLength + "s | %4$s\n", 
-        i, name, team, formattedLapTime);
-        System.out.println(line);
+    void testVisualiseRaceResults() {
+        Visualiser visualiser = new Visualiser();
+        String actualOutput = visualiser.visualiseRaceResults();
+        String expectedOutput = 
+                " 1. Sebastian Vettel  | FERRARI                   | 01:04.415\n" + 
+                " 2. Daniel Ricciardo  | RED BULL RACING TAG HEUER | 01:12.013\n" + 
+                " 3. Valtteri Bottas   | MERCEDES                  | 01:12.434\n" + 
+                " 4. Lewis Hamilton    | MERCEDES                  | 01:12.460\n" + 
+                " 5. Stoffel Vandoorne | MCLAREN RENAULT           | 01:12.463\n" + 
+                " 6. Kimi Raikkonen    | FERRARI                   | 01:12.639\n" + 
+                " 7. Fernando Alonso   | MCLAREN RENAULT           | 01:12.657\n" + 
+                " 8. Sergey Sirotkin   | WILLIAMS MERCEDES         | 01:12.706\n" + 
+                " 9. Charles Leclerc   | SAUBER FERRARI            | 01:12.829\n" + 
+                "10. Sergio Perez      | FORCE INDIA MERCEDES      | 01:12.848\n" + 
+                "11. Romain Grosjean   | HAAS FERRARI              | 01:12.930\n" + 
+                "12. Pierre Gasly      | SCUDERIA TORO ROSSO HONDA | 01:12.941\n" + 
+                "13. Carlos Sainz      | RENAULT                   | 01:12.950\n" + 
+                "14. Esteban Ocon      | FORCE INDIA MERCEDES      | 01:13.028\n" + 
+                "15. Nico Hulkenberg   | RENAULT                   | 01:13.065\n" + 
+                "-------------------------------------------------------------\n" + 
+                "16. Brendon Hartley   | SCUDERIA TORO ROSSO HONDA | 01:13.179\n" + 
+                "17. Marcus Ericsson   | SAUBER FERRARI            | 01:13.265\n" + 
+                "18. Lance Stroll      | WILLIAMS MERCEDES         | 01:13.323\n" + 
+                "19. Kevin Magnussen   | HAAS FERRARI              | 01:13.393\n";
+        assertEquals(expectedOutput, actualOutput);
     }
 }

@@ -7,6 +7,6 @@ public class RaceResults {
     public static void main(String[] args) {
         Visualiser visualiser = new Visualiser();
         String results = visualiser.visualiseRaceResults();
-        System.out.println(results);
+        System.out.print(results);
     }
 }
