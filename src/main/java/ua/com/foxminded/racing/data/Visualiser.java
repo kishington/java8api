@@ -8,7 +8,7 @@ import java.util.Optional;
 public class Visualiser {
     private static final int NUMBER_OF_QUALIFYING_RACERS = 15;
     
-    String visualiseRaceResults() {
+    public String visualiseRaceResults() {
         DataHandler dataHandler = new DataHandler();
         List<Racer> racers = dataHandler.prepareDataForVisualisation();
         

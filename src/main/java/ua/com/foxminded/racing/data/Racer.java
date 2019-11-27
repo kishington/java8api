@@ -4,12 +4,12 @@ import java.time.Duration;
 import java.time.LocalTime;
 
 public class Racer {
-    String name;
-    String abbreviation;
-    String team;
-    LocalTime startTime;
-    LocalTime endTime;
-    Duration lapTime;
+    private String name;
+    private String abbreviation;
+    private String team;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private Duration lapTime;
     
     public String getName() {
         return name;
