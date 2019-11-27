@@ -3,19 +3,12 @@ package ua.com.foxminded.racing.data;
 import java.time.Duration;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
-import org.junit.jupiter.api.Test;
-
 public class Visualiser {
+    private static final int NUMBER_OF_QUALIFYING_RACERS = 15;
     
-    String startDataPath = "\\workspace\\javaapiexercise\\src\\main\\resources\\start.log";
-    String endDataPath = "\\workspace\\javaapiexercise\\src\\main\\resources\\end.log";
-    String abbreviationsDataPath = "\\workspace\\javaapiexercise\\src\\main\\resources\\abbreviations.txt";
-    
-    
-    String printQualifyingRacers(List<Racer> racers, int qualifyingRacersNumber) {
+    String formatRaceResults(List<Racer> racers) {
         int longestNameLength = getLongestNameLength(racers);
         int longestTeamNameLength = getLongestTeamNameLength(racers);
         StringBuilder results = new StringBuilder();
@@ -28,7 +21,7 @@ public class Visualiser {
                     i + 1, racer.getName(), racer.getTeam(), formattedLapTime);
             results.append(line);
             
-            if(i == qualifyingRacersNumber - 1) {
+            if(i == NUMBER_OF_QUALIFYING_RACERS - 1) {
                 String underline = String.format("%" + (line.length() - 1) + "s", " ");
                 underline = underline.replace(' ', '-') + "\n";
                 results.append(underline);
@@ -36,26 +29,7 @@ public class Visualiser {
         }
         return results.toString();
     }
-
-    @Test
-    void test_printResult() {
-        DataHandler dataHandler = new DataHandler();
-        Map<String, Racer> racers = dataHandler.getRacers(abbreviationsDataPath);
-        dataHandler.setStartTimes(racers, startDataPath);
-        dataHandler.setEndTimes(racers, endDataPath);
-        List<Racer> racersList = dataHandler.calculateLapTimes(racers);
-        dataHandler.rankRacers(racersList);
-        String results = printQualifyingRacers(racersList, 15);
-        System.out.println(results);
-    }
-    
-    String formatLapTime(Duration duration) {
-        long minutes = duration.toMinutes();
-        long seconds = duration.toSeconds() % 60;
-        long millis = duration.toMillis() % 1000;
-        String output = String.format("%1$02d" + ":" + "%2$02d" + "." + "%3$03d", minutes, seconds, millis);
-        return output;
-    }
+   
     int getLongestNameLength(List<Racer> racers) {
         String longestName = "";
         Optional<String> longestNameOp = racers.stream().map(r -> r.getName()).max(Comparator.comparingInt(String::length));
@@ -72,5 +46,13 @@ public class Visualiser {
             longestTeamName = longestTeamNameOp.get();
         }
         return longestTeamName.length();
+    }
+    
+    String formatLapTime(Duration duration) {
+        long minutes = duration.toMinutes();
+        long seconds = duration.toSeconds() % 60;
+        long millis = duration.toMillis() % 1000;
+        String output = String.format("%1$02d" + ":" + "%2$02d" + "." + "%3$03d", minutes, seconds, millis);
+        return output;
     }
 }
