@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toMap;
 
-public class DataHandler {
+public class DataPreparer {
 
     private static final String ABBREVIATIONS_DATA_PATH = "\\workspace\\javaapiexercise\\src\\main\\resources\\abbreviations.txt";
     private static final String START_DATA_PATH = "\\workspace\\javaapiexercise\\src\\main\\resources\\start.log";
