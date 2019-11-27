@@ -7,10 +7,9 @@ public class Racer implements Comparable<Racer> {
     String name;
     String abbreviation;
     String team;
-    Duration lapTime;
     LocalTime startTime;
     LocalTime endTime;
-    int position;
+    Duration lapTime;
     
     
     @Override
@@ -28,12 +27,6 @@ public class Racer implements Comparable<Racer> {
         this.team = team;
     }
     
-    public int getPosition() {
-        return position;
-    }
-    public void setPosition(int position) {
-        this.position = position;
-    }
     public String getName() {
         return name;
     }
