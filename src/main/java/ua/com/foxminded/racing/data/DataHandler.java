@@ -19,10 +19,18 @@ import static java.util.stream.Collectors.toMap;
 
 public class DataHandler {
 
+    String abbreviationsDataPath = "\\workspace\\javaapiexercise\\src\\main\\resources\\abbreviations.txt";
     String startDataPath = "\\workspace\\javaapiexercise\\src\\main\\resources\\start.log";
     String endDataPath = "\\workspace\\javaapiexercise\\src\\main\\resources\\end.log";
-    String abbreviationsDataPath = "\\workspace\\javaapiexercise\\src\\main\\resources\\abbreviations.txt";
 
+    List<Racer> prepareDataForVisualisation() {
+        Map<String, Racer> racersMap = getRacers(abbreviationsDataPath);
+        setStartTimes(racersMap, startDataPath);
+        setEndTimes(racersMap, endDataPath);
+        List<Racer> racers = calculateLapTimes(racersMap);
+        rankRacers(racers);
+        return racers;
+    }
     
     Map<String, Racer> getRacers(String abbreviationsDataPath) {
         Map<String, Racer> racers = new HashMap<>();
