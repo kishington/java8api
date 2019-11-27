@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
@@ -79,6 +81,24 @@ public class DataHandler {
             racer.setLapTime(lapTime);
         });
     }
+    
+    List<Racer> calculateLapTimes2(Map<String, Racer> racers) {
+        
+        racers.values().forEach(racer -> {
+            Duration lapTime = Duration.between(racer.getStartTime(), racer.getEndTime());
+            racer.setLapTime(lapTime);
+        });
+        List<Racer> racersList = new ArrayList<>(racers.values());
+        return(racersList);
+    }
+    
+    void rankRacers2(List<Racer> racers) {
+        Collections.sort(racers, (racer1, racer2) -> {
+            long racer1LapTimeInMillis = racer1.lapTime.toMillis();
+            long racer2LapTimeInMillis = racer2.lapTime.toMillis();
+            return (int) (racer1LapTimeInMillis - racer2LapTimeInMillis);
+        });
+    }
 
     String formatDuration(Duration duration) {
         long minutes = duration.toMinutes();
@@ -103,27 +123,5 @@ public class DataHandler {
         return rankedRacers;
     }
  
-    int getLongestNameLength(Map<String, Racer> racers) {
-        List<String> names = new ArrayList<>();
-        racers.values().forEach(racer -> names.add(racer.getName()));
- 
-        String longestName = "";
-        Optional<String> longestNameOp = names.stream().max(Comparator.comparingInt(String::length)); 
-        if (longestNameOp.isPresent()) {
-            longestName = longestNameOp.get();
-        }
-        return longestName.length();
-    }
-    
-    int getLongestTeamNameLength(Map<String, Racer> racers) {
-        List<String> teams = new ArrayList<>();
-        racers.values().forEach(racer -> teams.add(racer.getTeam()));
- 
-        String longestTeamName = "";
-        Optional<String> longestTeamNameOp = teams.stream().max(Comparator.comparingInt(String::length)); 
-        if (longestTeamNameOp.isPresent()) {
-            longestTeamName = longestTeamNameOp.get();
-        }
-        return longestTeamName.length();
-    }
+
 }
