@@ -22,7 +22,7 @@ public class DataPreparer {
     private static final String START_DATA_PATH = "\\workspace\\javaapiexercise\\src\\main\\resources\\start.log";
     private static final String END_DATA_PATH = "\\workspace\\javaapiexercise\\src\\main\\resources\\end.log";
     
-    List<Racer> prepareData() {
+    List<Racer> prepareData() throws IOException {
         Map<String, Racer> racersMap = getRacers(ABBREVIATIONS_DATA_PATH);
         setStartTimes(racersMap, START_DATA_PATH);
         setEndTimes(racersMap, END_DATA_PATH);
@@ -31,44 +31,40 @@ public class DataPreparer {
         return racers;
     }
     
-    private Map<String, Racer> getRacers(String abbreviationsDataPath) {
+    private Map<String, Racer> getRacers(String abbreviationsDataPath) throws IOException {
         Map<String, Racer> racers = new HashMap<>();
-        try (Stream<String> abbreviationsData = Files.lines(Paths.get(abbreviationsDataPath))) {
-            racers = abbreviationsData.collect(toMap(line -> line.substring(0, 3), line -> {
-                Racer racer = new Racer();
-                Pattern pattern = Pattern.compile("_(.*)_(.*)");
-                Matcher matcher = pattern.matcher(line);
-                matcher.find();
-                String name = matcher.group(1);
-                String team = matcher.group(2);
-                racer.setName(name);
-                racer.setTeam(team);
-                return racer;
-            }));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Stream<String> abbreviationsData = Files.lines(Paths.get(abbreviationsDataPath));
+        racers = abbreviationsData.collect(toMap(line -> line.substring(0, 3), line -> {
+            Racer racer = new Racer();
+            Pattern pattern = Pattern.compile("_(.*)_(.*)");
+            Matcher matcher = pattern.matcher(line);
+            matcher.find();
+            String name = matcher.group(1);
+            String team = matcher.group(2);
+            racer.setName(name);
+            racer.setTeam(team);
+            return racer;
+        }));
+        abbreviationsData.close();
         return racers;
     }
     
-    private void setStartTimes(Map<String, Racer> racers, String startDataPath) {
-        try (Stream<String> startData = Files.lines(Paths.get(startDataPath))) {
-            startData.forEach(line -> {
-                Pattern pattern = Pattern.compile("([A-Z]{3}).*_(.{12})");
-                Matcher matcher = pattern.matcher(line);
-                matcher.find();
-                String abbreviation = matcher.group(1);
-                String startTime = matcher.group(2);
-                LocalTime startTimeParsed = LocalTime.parse(startTime);
-                racers.get(abbreviation).setStartTime(startTimeParsed);
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void setStartTimes(Map<String, Racer> racers, String startDataPath) throws IOException {
+        Stream<String> startData = Files.lines(Paths.get(startDataPath));
+        startData.forEach(line -> {
+            Pattern pattern = Pattern.compile("([A-Z]{3}).*_(.{12})");
+            Matcher matcher = pattern.matcher(line);
+            matcher.find();
+            String abbreviation = matcher.group(1);
+            String startTime = matcher.group(2);
+            LocalTime startTimeParsed = LocalTime.parse(startTime);
+            racers.get(abbreviation).setStartTime(startTimeParsed);
+        });
+        startData.close();
     }
     
-    private void setEndTimes(Map<String, Racer> racers, String endDataPath) {
-        try (Stream<String> endData = Files.lines(Paths.get(endDataPath))) {
+    private void setEndTimes(Map<String, Racer> racers, String endDataPath) throws IOException {
+        Stream<String> endData = Files.lines(Paths.get(endDataPath));
             endData.forEach(line -> {
                 Pattern pattern = Pattern.compile("([A-Z]{3}).*_(.{12})");
                 Matcher matcher = pattern.matcher(line);
@@ -78,9 +74,7 @@ public class DataPreparer {
                 LocalTime endTimeParsed = LocalTime.parse(endTime);
                 racers.get(abbreviation).setEndTime(endTimeParsed);
             });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+       endData.close();
     }
     
     private List<Racer> calculateLapTimes(Map<String, Racer> racers) {

@@ -2,12 +2,14 @@ package ua.com.foxminded.racing.data;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.IOException;
+
 import org.junit.jupiter.api.Test;
 
 public class VisualiserTest {
     
     @Test
-    void testVisualiseRaceResults() {
+    void testVisualiseRaceResults() throws IOException {
         Visualiser visualiser = new Visualiser();
         String actualOutput = visualiser.visualiseRaceResults();
         String expectedOutput = 

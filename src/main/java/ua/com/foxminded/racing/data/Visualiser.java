@@ -1,5 +1,6 @@
 package ua.com.foxminded.racing.data;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.Comparator;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.Optional;
 public class Visualiser {
     private static final int NUMBER_OF_QUALIFYING_RACERS = 15;
 
-    public String visualiseRaceResults() {
+    public String visualiseRaceResults() throws IOException {
         DataPreparer dataPreparer = new DataPreparer();
         List<Racer> racers = dataPreparer.prepareData();
 
