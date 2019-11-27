@@ -8,9 +8,13 @@ import java.util.Optional;
 public class Visualiser {
     private static final int NUMBER_OF_QUALIFYING_RACERS = 15;
     
-    String formatRaceResults(List<Racer> racers) {
+    String visualiseRaceResults() {
+        DataHandler dataHandler = new DataHandler();
+        List<Racer> racers = dataHandler.prepareDataForVisualisation();
+        
         int longestNameLength = getLongestNameLength(racers);
         int longestTeamNameLength = getLongestTeamNameLength(racers);
+       
         StringBuilder results = new StringBuilder();
         
         for (int i = 0; i < racers.size(); i++) {

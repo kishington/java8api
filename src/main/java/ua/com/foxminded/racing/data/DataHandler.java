@@ -23,7 +23,7 @@ public class DataHandler {
     String startDataPath = "\\workspace\\javaapiexercise\\src\\main\\resources\\start.log";
     String endDataPath = "\\workspace\\javaapiexercise\\src\\main\\resources\\end.log";
 
-    List<Racer> prepareDataForVisualisation() {
+    public List<Racer> prepareDataForVisualisation() {
         Map<String, Racer> racersMap = getRacers(abbreviationsDataPath);
         setStartTimes(racersMap, startDataPath);
         setEndTimes(racersMap, endDataPath);
