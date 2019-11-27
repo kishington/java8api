@@ -92,36 +92,11 @@ public class DataHandler {
         return(racersList);
     }
     
-    void rankRacers2(List<Racer> racers) {
+    void rankRacers(List<Racer> racers) {
         Collections.sort(racers, (racer1, racer2) -> {
             long racer1LapTimeInMillis = racer1.lapTime.toMillis();
             long racer2LapTimeInMillis = racer2.lapTime.toMillis();
             return (int) (racer1LapTimeInMillis - racer2LapTimeInMillis);
         });
     }
-
-    String formatDuration(Duration duration) {
-        long minutes = duration.toMinutes();
-        long seconds = duration.toSeconds() % 60;
-        long millis = duration.toMillis() % 1000;
-        String output = String.format("%1$02d" + ":" + "%2$02d" + "." + "%3$03d", minutes, seconds, millis);
-        return output;
-    }
-    
-    Map<String, Racer> rankRacers(Map<String, Racer> racers) {
-        /*
-         * racers = racers.entrySet() .stream() .sorted(Map.Entry.comparingByValue())
-         * .collect(toMap( Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue)
-         * -> oldValue, LinkedHashMap::new));
-         */
-        
-        Map<String, Racer> rankedRacers = new LinkedHashMap<>();
-        racers.entrySet()
-        .stream()
-        .sorted(Map.Entry.comparingByValue())
-        .forEach(x -> rankedRacers.put(x.getKey(), x.getValue()));
-        return rankedRacers;
-    }
- 
-
 }

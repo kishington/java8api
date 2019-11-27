@@ -29,7 +29,7 @@ public class Visualiser {
             Racer racer = racers.get(i);
             String formattedLapTime = formatLapTime(racer.getLapTime());
             String line = String.format(
-                    "%1$2s. " + "%2$-" + longestNameLength + "s| " + "%3$-" + longestTeamNameLength + "s | %4$s\n",
+                    "%1$2s. " + "%2$-" + longestNameLength + "s | " + "%3$-" + longestTeamNameLength + "s | %4$s\n",
                     i + 1, racer.getName(), racer.getTeam(), formattedLapTime);
             results.append(line);
             
@@ -49,7 +49,7 @@ public class Visualiser {
         dataHandler.setStartTimes(racers, startDataPath);
         dataHandler.setEndTimes(racers, endDataPath);
         List<Racer> racersList = dataHandler.calculateLapTimes2(racers);
-        dataHandler.rankRacers2(racersList);
+        dataHandler.rankRacers(racersList);
         String results = printQualifyingRacers(racersList, 15);
         System.out.println(results);
     }
