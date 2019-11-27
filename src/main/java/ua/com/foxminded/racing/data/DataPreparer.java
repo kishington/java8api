@@ -14,6 +14,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.Test;
+
 import static java.util.stream.Collectors.toMap;
 
 public class DataPreparer {
@@ -51,11 +53,25 @@ public class DataPreparer {
         return racers;
     }
     
+    @Test
+    void test() {
+        String line = "MES2018-05-24_12:04:45.513";
+        Pattern pattern = Pattern.compile("([A-Z]{3}).*_(.{12})");
+        Matcher matcher = pattern.matcher(line);
+        matcher.find();
+        String abbreviation = matcher.group(1);
+        String time = matcher.group(2);
+        System.out.println("abbreviation: " + abbreviation + "\ntime: " + time);
+    }
+    
     private void setStartTimes(Map<String, Racer> racers, String startDataPath) {
         try (Stream<String> startData = Files.lines(Paths.get(startDataPath))) {
             startData.forEach(line -> {
-                String abbreviation = line.substring(0, 3);
-                String startTime = line.substring(14, 26);
+                Pattern pattern = Pattern.compile("([A-Z]{3}).*_(.{12})");
+                Matcher matcher = pattern.matcher(line);
+                matcher.find();
+                String abbreviation = matcher.group(1);
+                String startTime = matcher.group(2);
                 LocalTime startTimeParsed = LocalTime.parse(startTime);
                 racers.get(abbreviation).setStartTime(startTimeParsed);
             });
@@ -67,8 +83,11 @@ public class DataPreparer {
     private void setEndTimes(Map<String, Racer> racers, String endDataPath) {
         try (Stream<String> endData = Files.lines(Paths.get(endDataPath))) {
             endData.forEach(line -> {
-                String abbreviation = line.substring(0, 3);
-                String endTime = line.substring(14, 26);
+                Pattern pattern = Pattern.compile("([A-Z]{3}).*_(.{12})");
+                Matcher matcher = pattern.matcher(line);
+                matcher.find();
+                String abbreviation = matcher.group(1);
+                String endTime = matcher.group(2);
                 LocalTime endTimeParsed = LocalTime.parse(endTime);
                 racers.get(abbreviation).setEndTime(endTimeParsed);
             });
