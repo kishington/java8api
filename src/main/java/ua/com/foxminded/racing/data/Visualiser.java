@@ -1,15 +1,10 @@
 package ua.com.foxminded.racing.data;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.Test;
 
@@ -48,7 +43,7 @@ public class Visualiser {
         Map<String, Racer> racers = dataHandler.getRacers(abbreviationsDataPath);
         dataHandler.setStartTimes(racers, startDataPath);
         dataHandler.setEndTimes(racers, endDataPath);
-        List<Racer> racersList = dataHandler.calculateLapTimes2(racers);
+        List<Racer> racersList = dataHandler.calculateLapTimes(racers);
         dataHandler.rankRacers(racersList);
         String results = printQualifyingRacers(racersList, 15);
         System.out.println(results);

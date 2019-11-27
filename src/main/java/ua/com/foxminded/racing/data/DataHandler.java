@@ -7,15 +7,11 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
@@ -74,16 +70,7 @@ public class DataHandler {
         }
     }
     
-    void calculateLapTimes(Map<String, Racer> racers) {
-        
-        racers.values().forEach(racer -> {
-            Duration lapTime = Duration.between(racer.getStartTime(), racer.getEndTime());
-            racer.setLapTime(lapTime);
-        });
-    }
-    
-    List<Racer> calculateLapTimes2(Map<String, Racer> racers) {
-        
+    List<Racer> calculateLapTimes(Map<String, Racer> racers) {
         racers.values().forEach(racer -> {
             Duration lapTime = Duration.between(racer.getStartTime(), racer.getEndTime());
             racer.setLapTime(lapTime);
