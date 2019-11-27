@@ -14,8 +14,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.Test;
-
 import static java.util.stream.Collectors.toMap;
 
 public class DataPreparer {
@@ -51,17 +49,6 @@ public class DataPreparer {
             e.printStackTrace();
         }
         return racers;
-    }
-    
-    @Test
-    void test() {
-        String line = "MES2018-05-24_12:04:45.513";
-        Pattern pattern = Pattern.compile("([A-Z]{3}).*_(.{12})");
-        Matcher matcher = pattern.matcher(line);
-        matcher.find();
-        String abbreviation = matcher.group(1);
-        String time = matcher.group(2);
-        System.out.println("abbreviation: " + abbreviation + "\ntime: " + time);
     }
     
     private void setStartTimes(Map<String, Racer> racers, String startDataPath) {
