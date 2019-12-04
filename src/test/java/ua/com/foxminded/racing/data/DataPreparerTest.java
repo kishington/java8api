@@ -37,7 +37,7 @@ public class DataPreparerTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             dataPreparer.prepareData(ABBREVIATIONS_DATA_PATH, EMPTY_FILE_PATH, END_DATA_PATH);
         });
-        assertEquals("Missing strart time data for at least one racer", exception.getMessage());
+        assertEquals("Missing start time data for at least one racer", exception.getMessage());
     }
 
     @Test
