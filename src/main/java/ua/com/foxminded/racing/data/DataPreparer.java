@@ -1,14 +1,9 @@
 package ua.com.foxminded.racing.data;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -17,20 +12,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toMap;
 
 public class DataPreparer {
-
-    private static final String ABBREVIATIONS_DATA_PATH = "/abbreviations.txt";
-    private static final String START_DATA_PATH = "/start.log";
-    private static final String END_DATA_PATH = "/end.log";
     
-    List<Racer> prepareData() throws IOException {
-        Map<String, Racer> racersMap = getRacers(ABBREVIATIONS_DATA_PATH);
-        setStartTimes(racersMap, START_DATA_PATH);
-        setEndTimes(racersMap, END_DATA_PATH);
+    List<Racer> prepareData(String abbreviationsDataPath, String startDataPath, String endDataPath) throws IOException {
+        Map<String, Racer> racersMap = getRacers(abbreviationsDataPath);
+        setStartTimes(racersMap, startDataPath);
+        setEndTimes(racersMap, endDataPath);
         List<Racer> racers = calculateLapTimes(racersMap);
         rankRacers(racers);
         return racers;

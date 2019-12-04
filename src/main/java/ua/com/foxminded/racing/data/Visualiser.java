@@ -8,10 +8,14 @@ import java.util.Optional;
 
 public class Visualiser {
     private static final int NUMBER_OF_QUALIFYING_RACERS = 15;
+    
+    private static final String ABBREVIATIONS_DATA_PATH = "/abbreviations.txt";
+    private static final String START_DATA_PATH = "/start.log";
+    private static final String END_DATA_PATH = "/end.log";
 
     public String visualiseRaceResults() throws IOException {
         DataPreparer dataPreparer = new DataPreparer();
-        List<Racer> racers = dataPreparer.prepareData();
+        List<Racer> racers = dataPreparer.prepareData(ABBREVIATIONS_DATA_PATH, START_DATA_PATH, END_DATA_PATH);
 
         int longestNameLength = getLongestNameLength(racers);
         int longestTeamNameLength = getLongestTeamNameLength(racers);
