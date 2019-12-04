@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class Visualiser {
     private static final int NUMBER_OF_QUALIFYING_RACERS = 15;
-    
+
     private static final String ABBREVIATIONS_DATA_PATH = "/abbreviations.txt";
     private static final String START_DATA_PATH = "/start.log";
     private static final String END_DATA_PATH = "/end.log";
