@@ -16,4 +16,4 @@ Example output:
 ------------------------------------------------------------------------
 16. Brendon Hartley      | SCUDERIA TORO ROSSO HONDA     | 1:13.179
 17. Marcus Ericsson      | SAUBER FERRARI                | 1:13.265
-<pre/>
+</pre>
